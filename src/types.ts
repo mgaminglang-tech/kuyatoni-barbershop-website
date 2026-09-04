@@ -15,6 +15,7 @@ export interface TrendingCut {
   bestFor: string;
   imageUrl: string;
   maintenance: string;
+  category?: string;
 }
 
 export interface HighlightFeature {
