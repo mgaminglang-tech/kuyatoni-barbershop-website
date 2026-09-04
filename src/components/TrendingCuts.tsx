@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Eye, X, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Download, Check } from 'lucide-react';
-import { TRENDING_CUTS } from '../data/barberData';
-import { TrendingCut } from '../types';
+import { TRENDING_CUTS, KIDS_CUTS } from '../data/barberData';
+import { TrendingCut, HaircutAudience } from '../types';
 
 const CATEGORIES = [
   { label: 'ALL', value: 'ALL' },
@@ -13,6 +13,9 @@ const CATEGORIES = [
 
 // Helper to derive clean uppercase style metadata
 const getStyleMetadata = (cut: TrendingCut) => {
+  if (cut.tags && cut.tags.length > 0) {
+    return cut.tags.join(' • ');
+  }
   const category = cut.category ? cut.category.toUpperCase() : 'CLASSIC';
   let upkeep = 'LOW MAINTENANCE';
   const m = (cut.maintenance || '').toLowerCase();
@@ -29,6 +32,7 @@ const getStyleMetadata = (cut: TrendingCut) => {
 };
 
 export const TrendingCuts: React.FC = () => {
+  const [activeCollection, setActiveCollection] = useState<HaircutAudience>('men');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -37,19 +41,31 @@ export const TrendingCuts: React.FC = () => {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
 
-  // Filter cuts by category
-  const filteredCuts = selectedCategory === 'ALL'
-    ? TRENDING_CUTS
-    : TRENDING_CUTS.filter((cut) => cut.category === selectedCategory);
+  // Download feedback state
+  const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+
+  // Current collection catalog (18 Men's styles or 12 Kids' styles)
+  const currentCatalog = activeCollection === 'men' ? TRENDING_CUTS : KIDS_CUTS;
+
+  // Filter cuts by category in Men's mode
+  const filteredCuts = activeCollection === 'men' && selectedCategory !== 'ALL'
+    ? TRENDING_CUTS.filter((cut) => cut.category === selectedCategory)
+    : currentCatalog;
 
   // Show 6 cards initially when not expanded
   const visibleCuts = isExpanded ? filteredCuts : filteredCuts.slice(0, 6);
 
-  // Currently active cut in modal (cycles through all 18 hairstyles)
-  const activeCut: TrendingCut | null = currentIndex !== null ? TRENDING_CUTS[currentIndex] : null;
+  // Currently active cut in modal (cycles strictly within the active collection)
+  const activeCut: TrendingCut | null = currentIndex !== null ? currentCatalog[currentIndex] : null;
 
-  // Download feedback state
-  const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+  // Handle collection switcher (MEN'S STYLES <-> KIDS' CUTS)
+  const handleCollectionChange = (collection: HaircutAudience) => {
+    if (collection === activeCollection) return;
+    setActiveCollection(collection);
+    setIsExpanded(false);
+    setSelectedCategory('ALL');
+    setCurrentIndex(null);
+  };
 
   // Reset download state when active cut changes or modal closes
   useEffect(() => {
@@ -68,7 +84,8 @@ export const TrendingCuts: React.FC = () => {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${activeCut.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+      const cleanName = activeCut.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      link.download = `${cleanName}.png`;
 
       document.body.appendChild(link);
       link.click();
@@ -86,17 +103,17 @@ export const TrendingCuts: React.FC = () => {
     }
   };
 
-  // Modal navigation handlers
+  // Modal navigation handlers - cycles strictly through current catalog
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (currentIndex === null) return;
-    setCurrentIndex((prev) => (prev !== null ? (prev - 1 + TRENDING_CUTS.length) % TRENDING_CUTS.length : 0));
+    setCurrentIndex((prev) => (prev !== null ? (prev - 1 + currentCatalog.length) % currentCatalog.length : 0));
   };
 
   const handleNext = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (currentIndex === null) return;
-    setCurrentIndex((prev) => (prev !== null ? (prev + 1) % TRENDING_CUTS.length : 0));
+    setCurrentIndex((prev) => (prev !== null ? (prev + 1) % currentCatalog.length : 0));
   };
 
   const handleClose = () => {
@@ -104,7 +121,7 @@ export const TrendingCuts: React.FC = () => {
   };
 
   const handleCardClick = (cut: TrendingCut) => {
-    const index = TRENDING_CUTS.findIndex((c) => c.id === cut.id);
+    const index = currentCatalog.findIndex((c) => c.id === cut.id);
     setCurrentIndex(index >= 0 ? index : 0);
   };
 
@@ -138,7 +155,7 @@ export const TrendingCuts: React.FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentIndex]);
+  }, [currentIndex, currentCatalog.length]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -179,51 +196,105 @@ export const TrendingCuts: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#B8925E]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-14">
-          <div className="flex items-center justify-center gap-3">
-            <span className="w-8 h-[1px] bg-[#B8925E]/40" />
-            <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#B8925E]">
-              CURATED STYLES
-            </span>
-            <span className="w-8 h-[1px] bg-[#B8925E]/40" />
+        {/* Collection Switcher: MEN'S STYLES | KIDS' CUTS */}
+        <div className="flex items-center justify-center gap-2.5 sm:gap-4 mb-8 sm:mb-10 max-w-sm mx-auto px-2" role="tablist" aria-label="Haircut collections">
+          <button
+            role="tab"
+            aria-selected={activeCollection === 'men'}
+            aria-controls="haircuts-catalog-grid"
+            onClick={() => handleCollectionChange('men')}
+            className={`flex-1 py-2.5 px-3 sm:px-4 rounded text-xs font-bold uppercase tracking-[0.18em] sm:tracking-[0.22em] transition-all duration-200 border ${
+              activeCollection === 'men'
+                ? 'bg-[#B8925E] text-[#111111] border-[#B8925E] shadow-sm'
+                : 'bg-[#141414] text-[#A6A6A6] border-[#2A2A2A] hover:border-[#B8925E]/50 hover:text-[#E9E1D3]'
+            }`}
+          >
+            MEN'S STYLES
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeCollection === 'kids'}
+            aria-controls="haircuts-catalog-grid"
+            onClick={() => handleCollectionChange('kids')}
+            className={`flex-1 py-2.5 px-3 sm:px-4 rounded text-xs font-bold uppercase tracking-[0.18em] sm:tracking-[0.22em] transition-all duration-200 border ${
+              activeCollection === 'kids'
+                ? 'bg-[#B8925E] text-[#111111] border-[#B8925E] shadow-sm'
+                : 'bg-[#141414] text-[#A6A6A6] border-[#2A2A2A] hover:border-[#B8925E]/50 hover:text-[#E9E1D3]'
+            }`}
+          >
+            KIDS' CUTS
+          </button>
+        </div>
+
+        {/* Section Header Copy */}
+        {activeCollection === 'kids' ? (
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-14">
+            <div className="flex items-center justify-center gap-3">
+              <span className="w-8 h-[1px] bg-[#B8925E]/40" />
+              <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#B8925E]">
+                KIDS STYLE GUIDE
+              </span>
+              <span className="w-8 h-[1px] bg-[#B8925E]/40" />
+            </div>
+
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
+              Fresh Cuts <span className="italic font-bold text-[#F7F7F7]">For The Little Ones.</span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#A6A6A6] font-normal max-w-lg mx-auto leading-relaxed">
+              Clean, comfortable, and stylish haircut ideas for younger clients.
+            </p>
+
+            <div className="w-12 h-[1px] bg-[#B8925E]/40 mx-auto mt-4" />
           </div>
+        ) : (
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-14">
+            <div className="flex items-center justify-center gap-3">
+              <span className="w-8 h-[1px] bg-[#B8925E]/40" />
+              <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#B8925E]">
+                CURATED STYLES
+              </span>
+              <span className="w-8 h-[1px] bg-[#B8925E]/40" />
+            </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
-            Trending <span className="italic font-bold text-[#F7F7F7]">Haircuts</span>
-          </h2>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
+              Trending <span className="italic font-bold text-[#F7F7F7]">Haircuts</span>
+            </h2>
 
-          <p className="text-sm sm:text-base text-[#A6A6A6] font-normal max-w-lg mx-auto leading-relaxed">
-            Explore popular styles and find the look you want to show Kuya Toni.
-          </p>
+            <p className="text-sm sm:text-base text-[#A6A6A6] font-normal max-w-lg mx-auto leading-relaxed">
+              Explore popular styles and find the look you want to show Kuya Toni.
+            </p>
 
-          <div className="w-12 h-[1px] bg-[#B8925E]/40 mx-auto mt-4" />
-        </div>
+            <div className="w-12 h-[1px] bg-[#B8925E]/40 mx-auto mt-4" />
+          </div>
+        )}
 
-        {/* Category Filters */}
-        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 max-w-3xl mx-auto px-2">
-          {CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat.value;
-            return (
-              <button
-                key={cat.value}
-                onClick={() => setSelectedCategory(cat.value)}
-                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs tracking-wider uppercase transition-all duration-200 border ${
-                  isActive
-                    ? 'bg-[#B8925E] text-[#111111] font-bold border-[#B8925E] shadow-sm'
-                    : 'bg-[#121212] text-[#A6A6A6] border-[#2B2B2B] hover:border-[#B8925E]/50 hover:text-[#E9E1D3]'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
+        {/* Category Filters for Men's Styles */}
+        {activeCollection === 'men' && (
+          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 max-w-3xl mx-auto px-2">
+            {CATEGORIES.map((cat) => {
+              const isActive = selectedCategory === cat.value;
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => setSelectedCategory(cat.value)}
+                  className={`px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs tracking-wider uppercase transition-all duration-200 border ${
+                    isActive
+                      ? 'bg-[#B8925E] text-[#111111] font-bold border-[#B8925E] shadow-sm'
+                      : 'bg-[#121212] text-[#A6A6A6] border-[#2B2B2B] hover:border-[#B8925E]/50 hover:text-[#E9E1D3]'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Haircut Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 lg:gap-8">
+        <div id="haircuts-catalog-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 lg:gap-8">
           {visibleCuts.map((cut, idx) => {
-            const cutIndex = TRENDING_CUTS.findIndex((c) => c.id === cut.id);
+            const cutIndex = currentCatalog.findIndex((c) => c.id === cut.id);
             const cutNumber = String(cutIndex >= 0 ? cutIndex + 1 : idx + 1).padStart(2, '0');
             const styleMetadata = getStyleMetadata(cut);
 
@@ -297,7 +368,13 @@ export const TrendingCuts: React.FC = () => {
               onClick={handleToggleExpand}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-sm border border-[#B8925E] bg-[#141414] hover:bg-[#B8925E] text-[#E9E1D3] hover:text-[#111111] font-bold uppercase tracking-widest text-xs sm:text-sm transition-all duration-300 shadow-xl hover:shadow-[0_8px_24px_rgba(184,146,94,0.25)] group"
             >
-              <span>{isExpanded ? 'SHOW LESS' : 'VIEW MORE HAIRCUTS'}</span>
+              <span>
+                {isExpanded
+                  ? 'SHOW LESS'
+                  : activeCollection === 'kids'
+                  ? "VIEW MORE KIDS' CUTS"
+                  : 'VIEW MORE HAIRCUTS'}
+              </span>
               {isExpanded ? (
                 <ChevronUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
               ) : (
@@ -307,11 +384,13 @@ export const TrendingCuts: React.FC = () => {
           </div>
         )}
 
-        {/* Subtle Client Guidance Note */}
+        {/* Client Guidance Note */}
         <div className="mt-14 text-center text-xs sm:text-sm text-[#A6A6A6] max-w-2xl mx-auto flex items-center justify-center gap-2 px-4">
           <Sparkles className="w-4 h-4 text-[#B8925E] flex-shrink-0" />
           <span>
-            Not sure which cut fits you? Browse the styles and show Kuya Toni the look you prefer.
+            {activeCollection === 'kids'
+              ? 'Browse the styles, save your favorite, and show Kuya Toni the cut you prefer.'
+              : 'Not sure which cut fits you? Browse the styles and show Kuya Toni the look you prefer.'}
           </span>
         </div>
       </div>
@@ -379,7 +458,7 @@ export const TrendingCuts: React.FC = () => {
                   </div>
                 </div>
                 <div className="mt-3 text-[10px] text-[#777777] font-mono tracking-widest uppercase text-center">
-                  STYLE {String(currentIndex + 1).padStart(2, '0')} / {String(TRENDING_CUTS.length).padStart(2, '0')}
+                  STYLE {String(currentIndex + 1).padStart(2, '0')} / {String(currentCatalog.length).padStart(2, '0')}
                 </div>
               </div>
 
@@ -433,7 +512,9 @@ export const TrendingCuts: React.FC = () => {
                         Like this cut?
                       </p>
                       <p className="text-sm text-[#F7F7F7] mt-0.5 font-medium">
-                        Show this style to Kuya Toni.
+                        {activeCollection === 'kids'
+                          ? 'Save it and show this style to Kuya Toni.'
+                          : 'Show this style to Kuya Toni.'}
                       </p>
                     </div>
                   </div>
@@ -451,7 +532,7 @@ export const TrendingCuts: React.FC = () => {
                       PREVIOUS
                     </button>
                     <span className="text-[11px] text-[#888888] font-mono tracking-widest px-1">
-                      {currentIndex + 1} / {TRENDING_CUTS.length}
+                      {currentIndex + 1} / {currentCatalog.length}
                     </span>
                     <button
                       onClick={handleNext}
@@ -474,3 +555,4 @@ export const TrendingCuts: React.FC = () => {
     </section>
   );
 };
+

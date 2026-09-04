@@ -7,6 +7,8 @@ export interface ServiceItem {
   badge?: string;
 }
 
+export type HaircutAudience = 'men' | 'kids';
+
 export interface TrendingCut {
   id: string;
   name: string;
@@ -16,6 +18,8 @@ export interface TrendingCut {
   imageUrl: string;
   maintenance: string;
   category?: string;
+  audience?: HaircutAudience;
+  tags?: string[];
 }
 
 export interface HighlightFeature {
