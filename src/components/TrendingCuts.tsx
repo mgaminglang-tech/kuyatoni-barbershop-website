@@ -7,7 +7,7 @@ export const TrendingCuts: React.FC = () => {
   const [selectedCut, setSelectedCut] = useState<TrendingCut | null>(null);
 
   return (
-    <section id="trending-cuts" className="py-20 lg:py-28 bg-[#161616] relative border-t border-b border-[#242424]">
+    <section id="trending-cuts" className="py-20 lg:py-28 bg-[#161616] relative overflow-hidden border-t border-b border-[#242424]">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#B8925E]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#B8925E]/5 rounded-full blur-3xl pointer-events-none" />

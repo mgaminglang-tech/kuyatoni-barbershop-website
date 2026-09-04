@@ -118,7 +118,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Editorial Bar matching Design HTML */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-[10px] text-[#777777]">
-          <div className="flex items-center gap-8">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8">
             <div className="flex flex-col">
               <span className="text-[9px] text-[#B8925E] uppercase tracking-widest mb-0.5">Experience</span>
               <span className="text-xs font-serif italic text-[#E9E1D3]">Modern Grooming Excellence</span>
@@ -129,13 +129,13 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-[#A6A6A6] tracking-tighter uppercase opacity-50 text-[10px]">
+          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
+            <span className="text-[#A6A6A6] tracking-tighter uppercase opacity-50 text-[10px] text-left">
               © {new Date().getFullYear()} Kuya Toni Barber House • All Rights Reserved
             </span>
             <button
               onClick={scrollToTop}
-              className="p-2 rounded-sm bg-[#1A1A1A] hover:bg-[#B8925E] hover:text-[#111111] text-[#E9E1D3] transition-colors border border-white/10"
+              className="p-2 rounded-sm bg-[#1A1A1A] hover:bg-[#B8925E] hover:text-[#111111] text-[#E9E1D3] transition-colors border border-white/10 flex-shrink-0"
               aria-label="Scroll to top"
             >
               <ArrowUp className="w-3.5 h-3.5" />

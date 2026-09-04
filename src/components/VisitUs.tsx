@@ -18,7 +18,7 @@ export const VisitUs: React.FC = () => {
   };
 
   return (
-    <section id="visit-us" className="py-20 lg:py-28 bg-[#1B1B1B] relative border-t border-[#242424]">
+    <section id="visit-us" className="py-20 lg:py-28 bg-[#1B1B1B] relative overflow-hidden border-t border-[#242424]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
@@ -50,18 +50,18 @@ export const VisitUs: React.FC = () => {
               {/* Address Card */}
               <div className="p-6 rounded-sm bg-[#141414] border border-[#2A2A2A] hover:border-[#B8925E]/50 transition-colors">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-3.5">
+                  <div className="flex items-start gap-3.5 min-w-0">
                     <div className="w-10 h-10 rounded-sm bg-[#1F1F1F] border border-[#B8925E]/30 flex items-center justify-center flex-shrink-0 text-[#B8925E]">
                       <MapPin className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#B8925E] block">
                         Address
                       </span>
-                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1">
+                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1 break-words">
                         {SHOP_INFO.addressPlaceholder}
                       </p>
-                      <p className="text-xs text-[#A6A6A6] mt-0.5">
+                      <p className="text-xs text-[#A6A6A6] mt-0.5 break-words">
                         {SHOP_INFO.displayAddress}
                       </p>
                     </div>
@@ -69,7 +69,7 @@ export const VisitUs: React.FC = () => {
 
                   <button
                     onClick={() => handleCopy(SHOP_INFO.displayAddress, 'address')}
-                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E]"
+                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E] flex-shrink-0"
                     title="Copy address"
                   >
                     {copiedAddress ? <Check className="w-4 h-4 text-[#B8925E]" /> : <Copy className="w-4 h-4" />}
@@ -80,18 +80,18 @@ export const VisitUs: React.FC = () => {
               {/* Phone Card */}
               <div className="p-6 rounded-sm bg-[#141414] border border-[#2A2A2A] hover:border-[#B8925E]/50 transition-colors">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-3.5">
+                  <div className="flex items-start gap-3.5 min-w-0">
                     <div className="w-10 h-10 rounded-sm bg-[#1F1F1F] border border-[#B8925E]/30 flex items-center justify-center flex-shrink-0 text-[#B8925E]">
                       <Phone className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#B8925E] block">
                         Phone
                       </span>
-                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1">
+                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1 break-words">
                         {SHOP_INFO.phonePlaceholder}
                       </p>
-                      <p className="text-xs text-[#A6A6A6] mt-0.5">
+                      <p className="text-xs text-[#A6A6A6] mt-0.5 break-words">
                         Direct Line: {SHOP_INFO.displayPhone}
                       </p>
                     </div>
@@ -99,7 +99,7 @@ export const VisitUs: React.FC = () => {
 
                   <button
                     onClick={() => handleCopy(SHOP_INFO.displayPhone, 'phone')}
-                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E]"
+                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E] flex-shrink-0"
                     title="Copy phone number"
                   >
                     {copiedPhone ? <Check className="w-4 h-4 text-[#B8925E]" /> : <Copy className="w-4 h-4" />}
@@ -110,18 +110,18 @@ export const VisitUs: React.FC = () => {
               {/* Facebook Page Card */}
               <div className="p-6 rounded-sm bg-[#141414] border border-[#2A2A2A] hover:border-[#B8925E]/50 transition-colors">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-3.5">
+                  <div className="flex items-start gap-3.5 min-w-0">
                     <div className="w-10 h-10 rounded-sm bg-[#1F1F1F] border border-[#B8925E]/30 flex items-center justify-center flex-shrink-0 text-[#B8925E]">
                       <MessageCircle className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#B8925E] block">
                         Facebook Page
                       </span>
-                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1">
+                      <p className="text-sm sm:text-base font-medium text-[#F7F7F7] mt-1 break-all">
                         {SHOP_INFO.facebookLink}
                       </p>
-                      <p className="text-xs text-[#A6A6A6] mt-0.5">
+                      <p className="text-xs text-[#A6A6A6] mt-0.5 break-words">
                         Official Page: {SHOP_INFO.facebookHandle}
                       </p>
                     </div>
@@ -131,7 +131,7 @@ export const VisitUs: React.FC = () => {
                     href={SHOP_INFO.facebookLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E]"
+                    className="p-2 text-[#A6A6A6] hover:text-[#B8925E] transition-colors rounded-sm hover:bg-[#1E1E1E] flex-shrink-0"
                     title="Open Facebook Page"
                   >
                     <ExternalLink className="w-4 h-4" />

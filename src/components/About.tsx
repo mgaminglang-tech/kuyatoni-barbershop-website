@@ -19,7 +19,7 @@ export const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Brand Emblem & Visual Atmosphere - Editorial Aesthetic */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-8 sm:p-10 rounded-sm bg-[#141414] border-l-4 border-[#B8925E] border-t border-r border-b border-white/5 relative shadow-2xl overflow-hidden">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 sm:p-10 rounded-sm bg-[#141414] border-l-4 border-[#B8925E] border-t border-r border-b border-white/5 relative shadow-2xl overflow-hidden">
             <div
               className="absolute inset-0 opacity-15 pointer-events-none"
               style={{
@@ -27,7 +27,7 @@ export const About: React.FC = () => {
               }}
             />
 
-            <span className="text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#B8925E] font-semibold mb-4 z-10 text-center">
+            <span className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[#B8925E] font-semibold mb-4 z-10 text-center break-words">
               EST. 2023 • MARIVELES, BATAAN
             </span>
 
@@ -37,7 +37,7 @@ export const About: React.FC = () => {
 
             <div className="w-24 h-[1px] bg-[#B8925E]/30 my-6 z-10" />
 
-            <p className="text-[11px] uppercase tracking-[0.25em] text-[#A6A6A6] font-medium z-10">
+            <p className="text-[11px] uppercase tracking-wider sm:tracking-[0.25em] text-[#A6A6A6] font-medium z-10 max-w-xs mx-auto break-words">
               Experience Modern Grooming Excellence
             </p>
             <p className="text-xs text-[#E9E1D3]/80 mt-2 italic font-serif z-10">

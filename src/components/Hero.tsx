@@ -39,8 +39,8 @@ export const Hero: React.FC = () => {
 
             {/* Main Headline - Editorial Serif Italic */}
             <div className="space-y-1">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif leading-[0.95] text-[#E9E1D3] italic font-normal tracking-tight">
-                <span className="block text-xs sm:text-sm font-sans font-semibold uppercase tracking-[0.25em] text-[#B8925E] not-italic mb-3">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif leading-[0.95] text-[#E9E1D3] italic font-normal tracking-tight break-words">
+                <span className="block text-xs sm:text-sm font-sans font-semibold uppercase tracking-[0.18em] sm:tracking-[0.25em] text-[#B8925E] not-italic mb-3">
                   Kuya Toni Barber House
                 </span>
                 Sharp Cuts.<br />
