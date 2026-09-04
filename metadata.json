@@ -1,0 +1,6 @@
+{
+  "name": "Kuya Toni Barber House",
+  "description": "Modern and premium landing page for Kuya Toni Barber House featuring classic haircuts, fresh fades, trending cuts, and walk-in barber services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
