@@ -40,6 +40,9 @@ export const Hero: React.FC = () => {
             {/* Main Headline - Editorial Serif Italic */}
             <div className="space-y-1">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif leading-[0.95] text-[#E9E1D3] italic font-normal tracking-tight">
+                <span className="block text-xs sm:text-sm font-sans font-semibold uppercase tracking-[0.25em] text-[#B8925E] not-italic mb-3">
+                  Kuya Toni Barber House
+                </span>
                 Sharp Cuts.<br />
                 Clean Style.<br />
                 <span className="text-[#F7F7F7] not-italic font-bold font-serif">
@@ -50,7 +53,7 @@ export const Hero: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-[#A6A6A6] text-sm sm:text-base max-w-md leading-relaxed font-normal">
-              Quality barber services, fresh fades, and trending cuts at Kuya Toni Barber House. Your local destination for precision and style.
+              Quality barber services, fresh fades, men's haircuts, and precision grooming at Kuya Toni Barber House in Sisiman, Mariveles, Bataan. Walk-ins are always welcome.
             </p>
 
             {/* Call to Actions - Editorial Minimal Buttons */}
@@ -81,9 +84,9 @@ export const Hero: React.FC = () => {
 
             {/* Editorial Philosophy Box */}
             <div className="mt-8 pt-6 border-t border-[#B8925E]/15 space-y-2">
-              <h3 className="text-[#E9E1D3] text-xs uppercase tracking-[0.25em] font-semibold">
+              <p className="text-[#E9E1D3] text-xs uppercase tracking-[0.25em] font-semibold">
                 Our Philosophy
-              </h3>
+              </p>
               <p className="text-xs sm:text-[13px] text-[#A6A6A6] leading-relaxed italic font-serif">
                 "Dedicated to delivering clean, stylish, and confidence-boosting cuts. We focus on quality, consistency, and a welcoming customer experience for every man who walks through our doors."
               </p>
@@ -114,7 +117,10 @@ export const Hero: React.FC = () => {
               <div className="relative aspect-[4/5] bg-[#151515] border border-white/10 overflow-hidden z-10">
                 <img
                   src={SHOP_INFO.portraitUrl}
-                  alt="Kuya Toni - Master Barber & Founder"
+                  alt="Kuya Toni - Master Barber and Founder of Kuya Toni Barber House in Mariveles, Bataan"
+                  width="400"
+                  height="500"
+                  fetchPriority="high"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top filter contrast-[1.03]"
                 />

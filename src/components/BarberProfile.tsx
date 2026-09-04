@@ -34,7 +34,10 @@ export const BarberProfile: React.FC = () => {
               <div className="relative aspect-[4/5] bg-[#151515] border border-white/10 overflow-hidden z-10">
                 <img
                   src={SHOP_INFO.portraitUrl}
-                  alt="Kuya Toni - Barber House Founder & Lead Stylist"
+                  alt="Kuya Toni barber at Kuya Toni Barber House"
+                  width="400"
+                  height="500"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top filter contrast-[1.03]"
                 />
@@ -69,7 +72,7 @@ export const BarberProfile: React.FC = () => {
               </div>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
-                Meet <span className="italic font-bold text-[#F7F7F7]">Your Barber</span>
+                Meet <span className="italic font-bold text-[#F7F7F7]">Kuya Toni</span>
               </h2>
             </div>
 

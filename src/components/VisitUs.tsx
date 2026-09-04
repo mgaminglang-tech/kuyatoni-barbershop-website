@@ -31,11 +31,11 @@ export const VisitUs: React.FC = () => {
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
-            Visit <span className="italic font-bold text-[#F7F7F7]">Us</span>
+            Visit <span className="italic font-bold text-[#F7F7F7]">Kuya Toni Barber House</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#A6A6A6] font-normal max-w-lg mx-auto leading-relaxed">
-            Drop by our shop today for a fresh cut or get in touch through our direct channels.
+            Drop by our shop along Adelfa Street in Sisiman, Mariveles, Bataan for a fresh fade, classic men's haircut, or beard trim. No appointment needed.
           </p>
 
           <div className="w-12 h-[1px] bg-[#B8925E]/40 mx-auto mt-4" />
@@ -214,7 +214,10 @@ export const VisitUs: React.FC = () => {
                 <div className="relative w-full max-w-[380px] aspect-[16/9] rounded-sm overflow-hidden border border-[#B8925E]/40 shadow-xl mb-4 bg-[#111111] group">
                   <img
                     src="/images/shop-location.jpg"
-                    alt="Kuya Toni Barber House - Adelfa Street, Brgy. Sisiman, Mariveles, Bataan"
+                    alt="Kuya Toni Barber House shop location along Adelfa Street, Brgy. Sisiman, Mariveles, Bataan"
+                    width="380"
+                    height="214"
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/40 via-transparent to-transparent pointer-events-none" />

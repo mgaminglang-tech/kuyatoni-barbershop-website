@@ -73,7 +73,7 @@ export const About: React.FC = () => {
             {/* Warm and professional introduction paragraph */}
             <div className="space-y-4 text-base sm:text-lg text-[#A6A6A6] leading-relaxed">
               <p>
-                Welcome to <strong className="text-[#E9E1D3] font-semibold">Kuya Toni Barber House</strong>, your premier local barbershop where genuine Filipino hospitality meets contemporary grooming precision. We believe a great haircut isn't just about sharp lines—it’s about walking out of the chair carrying genuine confidence.
+                Welcome to <strong className="text-[#E9E1D3] font-semibold">Kuya Toni Barber House</strong>, your premier local barbershop in Sisiman, Mariveles, Bataan, where genuine Filipino hospitality meets contemporary grooming precision. We believe a great haircut isn't just about sharp lines—it’s about walking out of the chair carrying genuine confidence.
               </p>
               <p className="text-[#A6A6A6]/90">
                 Our shop focuses on clean cuts, fresh fades, comfortable service, and helping every customer look and feel their absolute best. Whether you are dropping in for your regular weekly lineup, an executive taper, or a trendsetting textured crop, Kuya Toni provides a relaxed, unhurried atmosphere rooted in craft and respect.

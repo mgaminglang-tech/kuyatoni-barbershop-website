@@ -45,7 +45,9 @@ export const Navbar: React.FC = () => {
               >
                 <img
                   src="/images/haircuts/logo.png"
-                  alt="Kuya Toni Barber House"
+                  alt="Kuya Toni Barber House Logo"
+                  width="60"
+                  height="60"
                   className="w-full h-full object-contain"
                 />
               </div>

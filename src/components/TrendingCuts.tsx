@@ -24,7 +24,7 @@ export const TrendingCuts: React.FC = () => {
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#E9E1D3] tracking-tight">
-            Trending <span className="italic font-bold text-[#F7F7F7]">Cuts</span>
+            Trending <span className="italic font-bold text-[#F7F7F7]">Haircuts</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#A6A6A6] font-normal max-w-lg mx-auto leading-relaxed">
@@ -46,7 +46,10 @@ export const TrendingCuts: React.FC = () => {
               <div className="relative aspect-square w-full overflow-hidden bg-[#141414]">
                 <img
                   src={cut.imageUrl}
-                  alt={`${cut.name} - Kuya Toni Barber House Trending Cut`}
+                  alt={`${cut.name} haircut style at Kuya Toni Barber House`}
+                  width="400"
+                  height="400"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500 filter contrast-[1.05]"
                 />
@@ -115,6 +118,7 @@ export const TrendingCuts: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setSelectedCut(null)}
+              aria-label="Close style details modal"
               className="absolute top-4 right-4 p-1.5 rounded-full text-[#A6A6A6] hover:text-[#F7F7F7] hover:bg-[#252525] transition-colors"
             >
               <X className="w-5 h-5" />
@@ -137,7 +141,9 @@ export const TrendingCuts: React.FC = () => {
             <div className="relative aspect-square max-w-[300px] mx-auto rounded-md overflow-hidden border border-[#B8925E]/40 bg-[#111111]">
               <img
                 src={selectedCut.imageUrl}
-                alt={selectedCut.name}
+                alt={`${selectedCut.name} haircut style preview`}
+                width="300"
+                height="300"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center filter contrast-[1.04]"
               />
